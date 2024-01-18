@@ -1,0 +1,265 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Parallax Scrolling Effect</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <nav>
+        
+      </nav>
+
+     
+      <img
+        src="https://res.cloudinary.com/dncemocxu/image/upload/v1626342928/Parallax/Parallax%20each%20layers/parallax-mountain-foreground-trees_nksilg.png"
+        class="first-trees translate" data-speed="0.25"
+      />
+      <img
+        src="https://res.cloudinary.com/dncemocxu/image/upload/v1626342928/Parallax/Parallax%20each%20layers/parallax-mountain-trees_xtvlzo.png"
+        class="second-trees translate" data-speed="0.2"
+      />
+      <img
+        src="https://res.cloudinary.com/dncemocxu/image/upload/v1626342928/Parallax/Parallax%20each%20layers/parallax-mountain-mountains_zzurhb.png"
+        class="first-mountain translate" data-speed="0.01"
+      />
+      <img
+        src="https://res.cloudinary.com/dncemocxu/image/upload/v1626342928/Parallax/Parallax%20each%20layers/parallax-mountain-montain-far_kio2sh.png"
+        class="second-mountain translate" data-speed="0.2"
+      />
+      <img
+        src="https://res.cloudinary.com/dncemocxu/image/upload/v1626342928/Parallax/Parallax%20each%20layers/parallax-mountain-bg_itsujk.png"
+        class="sky-background translate" data-speed="0.7"
+      />
+    </header>
+
+    <script src="/index.js">
+
+const translate = document.querySelectorAll(".translate");
+const bigTitle = document.querySelector("header");
+const shadow = document.querySelector(".shadow");
+const content = document.querySelector(".content");
+const section = document.querySelector("section");
+const imgContainer = document.querySelector(".img-container");
+const opacity = document.querySelectorAll(".opacity");
+const border = document.querySelector(".border");
+
+let headerHeight = header.offsetHeight;
+let sectionHeight = section.offsetHeight;
+
+console.log(headerHeight);
+console.log(sectionHeight);
+
+window.addEventListener("scroll", () => {
+  let scroll = window.pageYOffset;
+  let sectionY = section.getBoundingClientRect();
+  console.log(sectionY.top);
+
+  translate.forEach((element) => {
+    let speed = element.dataset.speed;
+    element.style.transform = `translateY(${scroll * speed}px)`;
+  });
+
+  opacity.forEach((element) => {
+    element.style.opacity = scroll / (sectionY.top + sectionHeight);
+  });
+
+  bigTitle.style.opacity = -scroll / (headerHeight / 2) + 1;
+  shadow.style.height = `${scroll * 0.5 + 50}px`;
+
+  content.style.transform = `translateY(${
+    (scroll / (sectionHeight + sectionY.top)) * 60 - 60
+  }px)`;
+
+  imgContainer.style.transform = `translateY(${
+    (scroll / (sectionHeight + sectionY.top)) * - 50 + 50
+  }px)`;
+
+  border.style.width = `${(scroll / (sectionY.top + sectionHeight)) * 30}%`;
+});
+
+
+</script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap");
+
+:root {
+  --pixel-size: 8;
+}
+
+*,
+:before,
+:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  color: #fff;
+  font-family: "Press Start 2P", cursive;
+}
+
+.container {
+  max-width: 70rem;
+  padding: 0 2rem;
+  margin: 0 auto;
+}
+
+header {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: #905c84;
+}
+
+header:after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0px;
+  top: 0px;
+}
+
+header img {
+  image-rendering: pixelated;
+}
+
+.first-trees {
+  position: absolute;
+  bottom: 0px;
+  width: 100vw;
+  right: 0;
+  z-index: 20;
+}
+
+.second-trees {
+  position: absolute;
+  width: 100vw;
+  bottom: 0px;
+  z-index: 19;
+}
+
+.first-mountain {
+  position: absolute;
+  width: 100vw;
+  bottom: 0px;
+  z-index: 18;
+}
+
+.second-mountain {
+  position: absolute;
+  width: 100vw;
+  bottom: 0px;
+  z-index: 17;
+}
+
+.sky-background {
+  position: absolute;
+  object-fit: cover;
+  width: 100vw;
+  top: 0px;
+  z-index: 16;
+  object-fit: contain;
+}
+
+nav {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100%;
+  padding: 1rem 0;
+  z-index: 30;
+}
+
+nav .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+section {
+  width: 100%;
+  background-color: #151515;
+  position: relative;
+}
+
+section .container {
+  padding: 3rem;
+  min-height: 100vh;
+}
+
+section .container > * {
+  margin: 2rem;
+}
+
+.content {
+  transform: translateY(-60px);
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.title {
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  letter-spacing: 0.5em;
+  text-transform: uppercase;
+}
+
+.text {
+  padding-top: 20px;
+  line-height: 2rem;
+}
+
+.border {
+  position: absolute;
+  width: 20%;
+  height: 3px;
+  background-color: white;
+}
+
+.shadow {
+  position: absolute;
+  bottom: 100%;
+  height: 50px;
+  width: 100%;
+  left: 0;
+  z-index: 20;
+  background: linear-gradient(to top, #151515, transparent);
+}
+
+.img-container {
+  transform: translateY(-50px);
+}
+
+.opacity {
+  opacity: 0;
+}
+
+@media (max-width: 850px) {
+  section .container {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 600px) {
+  .text {
+    font-size: 0.8rem;
+  }
+
+  .title {
+    font-size: 1.2rem;
+  }
+}
+</style>
+   
+  </body>
+</html>
